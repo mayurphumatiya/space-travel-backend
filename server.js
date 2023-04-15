@@ -1,10 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import userRouter from "./api/userRoutes";
 dotenv.config();
 const app = express();
 
 const port = 5000;
+app.use(express.json())
+// middlewares
+app.use("/user", userRouter);
 
 mongoose
   .connect(
