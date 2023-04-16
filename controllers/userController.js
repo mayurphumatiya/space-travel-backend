@@ -1,6 +1,9 @@
 import User from "../models/User";
 import bcrypt from "bcryptjs";
 import { isFieldPresentInRequest } from "../utils/helpers";
+import pkg from "jsonwebtoken";
+
+const { jwt } = pkg;
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -13,7 +16,7 @@ export const getAllUsers = async (req, res) => {
 
 export const createUser = async (req, res) => {
   try {
-    const reqBody = req.body
+    const reqBody = req.body;
     let requiredFields = ["first_name", "last_name", "email", "password"];
 
     let invalidFields = [];
@@ -53,7 +56,7 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   try {
-    const reqBody = req.body
+    const reqBody = req.body;
     let requiredFields = ["first_name", "last_name", "email", "password"];
 
     let invalidFields = [];
@@ -110,7 +113,7 @@ export const deleteUser = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const reqBody = req.body
+    const reqBody = req.body;
     let requiredFields = ["email", "password"];
 
     let invalidFields = [];
@@ -144,10 +147,18 @@ export const login = async (req, res) => {
         return res.status(400).json({ message: "Incorrect Password" });
       }
 
-      return res.status(200).json({ message: "Logged in Successfully!" });
+      const token = jwt.sign({ id: existingUser._id }, process.env.SECRET_KEY, {
+        expiresIn: 3600,
+      });
+
+      return res
+        .status(200)
+        .json({ existingUser, token, message: "Logged in Successfully!" });
     }
   } catch (e) {
     console.log(e);
-    return res.status(500).json({ message: "Something went wrong, Please try again later!" });
+    return res
+      .status(500)
+      .json({ message: "Something went wrong, Please try again later!" });
   }
 };

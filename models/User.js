@@ -20,6 +20,10 @@ const userSchema = new Schema({
     required: true,
     minLength:6,
   },
+  is_logged_in: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 export default mongoose.model("User", userSchema)
