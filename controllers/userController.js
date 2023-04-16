@@ -1,10 +1,8 @@
-import express from "express";
 import User from "../models/User";
 import bcrypt from "bcryptjs";
 
-const userRouter = express.Router();
 
-userRouter.get("/", async (req, res) => {
+export const getAllUsers = async (req, res) => {
   let users;
   try {
     users = await User.find();
@@ -18,10 +16,9 @@ userRouter.get("/", async (req, res) => {
   }
 
   return res.status(200).json({ users });
-});
+};
 
-//SIGN UP
-userRouter.post("/signup", async (req, res) => {
+export const createUser = async (req, res) => {
   let { first_name, last_name, email, password } = req.body;
   if (!first_name && !last_name && !email && !password) {
     return res.status(422).res.json({ message: "Invalid inputs" });
@@ -40,10 +37,9 @@ userRouter.post("/signup", async (req, res) => {
     return res.status(500).json({ message: "Unexpected error occurred" });
   }
   return res.status(201).json({ user });
-});
+};
 
-// UPDATE USER
-userRouter.put("/:id", async (req, res) => {
+export const updateUser = async (req, res) => {
   const id = req.params.id;
   let { first_name, last_name, email, password } = req.body;
   if (!first_name && !last_name && !email && !password) {
@@ -63,14 +59,13 @@ userRouter.put("/:id", async (req, res) => {
     console.log(e);
     return console.log(e);
   }
-  if(!user){
-    return res.status(500).json({message:"User does not exist!"})
+  if (!user) {
+    return res.status(500).json({ message: "User does not exist!" });
   }
-  res.status(200).json({message:"User updated successfully"});
-});
+  res.status(200).json({ message: "User updated successfully" });
+};
 
-// DELETE USER
-userRouter.delete("/:id", async (req, res) => {
+export const deleteUser = async (req, res) => {
   const id = req.params.id;
   let user;
   try {
@@ -79,10 +74,8 @@ userRouter.delete("/:id", async (req, res) => {
     console.log(e);
     return console.log(e);
   }
-  if(!user){
-    return res.status(500).json({message:"User does not exist!"})
+  if (!user) {
+    return res.status(500).json({ message: "User does not exist!" });
   }
-  res.status(200).json({message:"User deleted successfully"});
-});
-
-export default userRouter;
+  res.status(200).json({ message: "User deleted successfully" });
+};

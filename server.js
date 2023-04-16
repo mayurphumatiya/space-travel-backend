@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import userRouter from "./api/userRoutes";
+import userRouter from "./routes/userRoutes"
 dotenv.config();
 const app = express();
 
