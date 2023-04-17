@@ -9,8 +9,8 @@ const app = express();
 const port = 5000;
 app.use(express.json())
 // middlewares
-app.use("/user", userRouter);
-app.use("/auth", authRouter);
+app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
 
 
 mongoose
