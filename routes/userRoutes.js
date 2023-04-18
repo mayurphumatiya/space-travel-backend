@@ -8,6 +8,7 @@ import {
 
 const userRouter = express.Router();
 
+// GET ARRAY OF ALL USERS
 userRouter.get("/", getAllUsers);
 
 //SIGN UP
