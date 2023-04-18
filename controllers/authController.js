@@ -5,7 +5,7 @@ import jsonwebtoken from "jsonwebtoken";
 import User from "../models/User";
 import mongoose from "mongoose";
 
-export const login = async (req, res) => {
+export const userLogin = async (req, res) => {
   try {
     const reqBody = req.body;
     let requiredFields = ["email", "password"];
@@ -61,7 +61,7 @@ export const login = async (req, res) => {
   }
 };
 
-export const logout = async (req, res) => {
+export const userLogout = async (req, res) => {
   try {
     const userId = req.user.id;
     const user_id = mongoose.Types.ObjectId(userId);
