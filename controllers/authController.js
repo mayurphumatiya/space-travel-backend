@@ -28,21 +28,21 @@ export const userLogin = async (req, res) => {
 
     let { email, password } = reqBody;
 
-    let existingUser = await User.findOne({ email });
-    if (!existingUser) {
+    let user = await User.findOne({ email });
+    if (!user) {
       return res.status(404).json({ message: "User does not exist" });
     }
-    if (existingUser) {
+    if (user) {
       const isPasswordCorrect = bcrypt.compareSync(
         password,
-        existingUser.password
+        user.password
       );
       if (!isPasswordCorrect) {
         return res.status(400).json({ message: "Incorrect Password" });
       }
 
       const token = jsonwebtoken.sign(
-        { id: existingUser._id },
+        { id: user._id },
         process.env.SECRET_KEY,
         {
           expiresIn: 3600,
@@ -51,7 +51,7 @@ export const userLogin = async (req, res) => {
 
       return res
         .status(200)
-        .json({ token, existingUser, message: "Logged in Successfully!" });
+        .json({ token, user, message: "Logged in Successfully!" });
     }
   } catch (e) {
     console.log(e);
@@ -64,8 +64,8 @@ export const userLogin = async (req, res) => {
 export const userLogout = async (req, res) => {
   try {
     const userId = req.user.id;
-    const user_id = mongoose.Types.ObjectId(userId);
-    const user = await User.findOne({ user_id });
+    const user_id = new mongoose.Types.ObjectId(userId);
+    const user = User.findOne({ user_id });
     if (!user) {
       return res.status(404).json({ message: "User Not Found!" });
     }
