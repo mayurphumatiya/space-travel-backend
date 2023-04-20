@@ -85,9 +85,3 @@ export const userLogout = async (req, res) => {
     console.log(e);
   }
 };
-
-// @route POST api/users/create
-// @desc Create new user
-// @payload ("first_name","last_name","email_id","phone_number","gender")
-// @response  (token, user, message)
-// @access Public
