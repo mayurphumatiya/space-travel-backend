@@ -15,7 +15,7 @@ authRouter.post("/login", userLogin);
 // LOGOUT
 // @route POST /users/logout
 // @desc Logs Out
-// @payload (userId)
+// @header (token)
 // @response  (message)
 // @access Private
 authRouter.post("/logout", auth, userLogout);
