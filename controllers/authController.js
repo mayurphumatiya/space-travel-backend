@@ -33,10 +33,7 @@ export const userLogin = async (req, res) => {
       return res.status(404).json({ message: "User does not exist" });
     }
     if (user) {
-      const isPasswordCorrect = bcrypt.compareSync(
-        password,
-        user.password
-      );
+      const isPasswordCorrect = bcrypt.compareSync(password, user.password);
       if (!isPasswordCorrect) {
         return res.status(400).json({ message: "Incorrect Password" });
       }
@@ -49,9 +46,27 @@ export const userLogin = async (req, res) => {
         }
       );
 
-      return res
-        .status(200)
-        .json({ token, user, message: "Logged in Successfully!" });
+      const userLog = await User.updateOne(
+        { _id: user.id },
+        {
+          $set: {
+            is_logged_in: true,
+          },
+        }
+      );
+
+      if (userLog) {
+        return res.status(200).json({
+          token,
+          user: {
+            id: user.id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+          },
+          message: "Logged in Successfully!",
+        });
+      }
     }
   } catch (e) {
     console.log(e);
