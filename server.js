@@ -11,6 +11,9 @@ const port = 5000;
 app.use(cors())
 app.use(express.json())
 // middlewares
+app.use("/", (req, res)=>{
+  res.send("Hello Servers!");
+})
 app.use("/user", userRouter);
 app.use("/auth", authRouter);
 
