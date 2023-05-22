@@ -1,27 +1,26 @@
 import express from "express";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-import userRouter from "./routes/userRoutes"
+import config from "config";
+import userRouter from "./routes/userRoutes";
 import authRouter from "./routes/authRoutes";
-import cors from "cors"
-dotenv.config();
+import cors from "cors";
 const app = express();
 
-const port = 5000;
-app.use(cors())
-app.use(express.json())
+const dbConfig = config.get("Database.dbPass");
+
+const port = config.get("port");
+app.use(cors());
+app.use(express.json());
 // middlewares
-app.use("/", (req, res)=>{
-  res.send("Hello Servers!");
-})
+
+app.get("/", (req, res) => {
+  res.status(200).send("Hello server is running!").end();
+});
 app.use("/user", userRouter);
 app.use("/auth", authRouter);
 
-
 mongoose
-  .connect(
-    `mongodb+srv://admin:OFCuU4hGQbPPCley@cluster0.7lmpgrb.mongodb.net/test`
-  )
+  .connect(`mongodb+srv://admin:${dbConfig}@cluster0.7lmpgrb.mongodb.net/test`)
   .then(() =>
     app.listen(port, () => {
       console.log(`Connected to Database & Server is running`);
