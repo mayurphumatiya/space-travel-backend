@@ -27,7 +27,8 @@ export const createUser = async (req, res) => {
     });
 
     if (invalidFields.length > 0) {
-      return res.status(400).json({
+      return res.status(200).json({
+        status: false,
         message: `Error - Missing fields: ${invalidFields.join(", ")}`,
       });
     }
@@ -42,12 +43,26 @@ export const createUser = async (req, res) => {
     });
     const newUser = await user.save();
     if (!newUser) {
-      return res.status(500).json({ message: "Unexpected error occurred" });
+      return res.status(200).json({
+        status: false,
+        message: "Unexpected error occurred, Please try again later!",
+      });
     }
-    return res.status(201).json({ newUser });
+    return res.status(200).json({
+      status: true,
+      user: {
+        first_name: newUser.first_name,
+        last_name: newUser.last_name,
+        email: newUser.email,
+      },
+      message: "User Registered Successfully!",
+    });
   } catch (e) {
     console.log(e);
-    return console.log(e);
+    return res.status(200).json({
+      status: false,
+      message: "Unexpected error occurred, Please try again later!",
+    });
   }
 };
 
@@ -67,7 +82,8 @@ export const updateUser = async (req, res) => {
     });
 
     if (invalidFields.length > 0) {
-      return res.status(400).json({
+      return res.status(200).json({
+        status: false,
         message: `Error - Missing fields: ${invalidFields.join(", ")}`,
       });
     }
@@ -83,13 +99,20 @@ export const updateUser = async (req, res) => {
       hashPassword,
     });
     if (!user) {
-      return res.status(500).json({ message: "User does not exist!" });
+      return res
+        .status(200)
+        .json({ status: false, message: "User does not exist!" });
     } else {
-      res.status(200).json({ message: "User updated successfully" });
+      res
+        .status(200)
+        .json({ status: true, message: "User updated successfully" });
     }
   } catch (e) {
     console.log(e);
-    return console.log(e);
+    return res.status(200).json({
+      status: false,
+      message: "Unexpected error occurred, Please try again later!",
+    });
   }
 };
 
@@ -98,12 +121,21 @@ export const deleteUser = async (req, res) => {
     const id = req.params.id;
     let user = await User.findByIdAndDelete(id);
     if (!user) {
-      return res.status(500).json({ message: "User does not exist!" });
+      return res
+        .status(200)
+        .json({ status: false, message: "User does not exist!" });
     } else {
-      res.status(200).json({ message: "User deleted successfully" });
+      res
+        .status(200)
+        .json({ status: true, message: "User deleted successfully" });
     }
   } catch (e) {
     console.log(e);
-    return console.log(e);
+    return res
+      .status(200)
+      .json({
+        status: false,
+        message: "Unexpected error occurred, Please try again later!",
+      });
   }
 };

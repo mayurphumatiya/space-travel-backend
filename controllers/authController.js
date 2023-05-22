@@ -21,7 +21,8 @@ export const userLogin = async (req, res) => {
     });
 
     if (invalidFields.length > 0) {
-      return res.status(400).json({
+      return res.status(200).json({
+        status: false,
         message: `Error - Missing fields: ${invalidFields.join(", ")}`,
       });
     }
@@ -30,12 +31,16 @@ export const userLogin = async (req, res) => {
 
     let user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).json({ message: "User does not exist" });
+      return res
+        .status(200)
+        .json({ statue: false, message: "User does not exist" });
     }
     if (user) {
       const isPasswordCorrect = bcrypt.compareSync(password, user.password);
       if (!isPasswordCorrect) {
-        return res.status(400).json({ message: "Incorrect Password" });
+        return res
+          .status(200)
+          .json({ status: false, message: "Incorrect Password" });
       }
 
       const token = jsonwebtoken.sign(
@@ -57,6 +62,7 @@ export const userLogin = async (req, res) => {
 
       if (userLog) {
         return res.status(200).json({
+          status: true,
           token,
           user: {
             id: user.id,
@@ -70,9 +76,10 @@ export const userLogin = async (req, res) => {
     }
   } catch (e) {
     console.log(e);
-    return res
-      .status(500)
-      .json({ message: "Something went wrong, Please try again later!" });
+    return res.status(200).json({
+      status: false,
+      message: "Something went wrong, Please try again later!",
+    });
   }
 };
 
@@ -82,7 +89,9 @@ export const userLogout = async (req, res) => {
     const user_id = new mongoose.Types.ObjectId(userId);
     const user = User.findOne({ user_id });
     if (!user) {
-      return res.status(404).json({ message: "User Not Found!" });
+      return res
+        .status(200)
+        .json({ status: false, message: "User Not Found!" });
     }
     const updateUser = await User.updateOne(
       { _id: user_id },
@@ -93,10 +102,20 @@ export const userLogout = async (req, res) => {
       }
     );
     if (!updateUser) {
-      return res.status(500).json({ message: "Error while logging out!" });
+      return res
+        .status(200)
+        .json({ status: false, message: "Error while logging out!" });
     }
-    return res.status(201).json({ message: "Logged out Successfully!" });
+    return res
+      .status(200)
+      .json({ status: true, message: "Logged out Successfully!" });
   } catch (e) {
     console.log(e);
+    return res
+      .status(200)
+      .json({
+        status: false,
+        message: "Unexpected error occurred, Please try again later!",
+      });
   }
 };
