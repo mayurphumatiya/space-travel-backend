@@ -1,3 +1,4 @@
+import config from "config";
 import jsonwebtoken from "jsonwebtoken";
 
 export const auth = (req, res, next) => {
@@ -12,7 +13,7 @@ export const auth = (req, res, next) => {
 
   try {
     // Verify token
-    const decrypted = jsonwebtoken.verify(token, process.env.SECRET_KEY);
+    const decrypted = jsonwebtoken.verify(token, config.get("secret_key"));
 
     // Add user from payload
     req.user = decrypted;
