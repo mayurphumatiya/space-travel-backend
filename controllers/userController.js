@@ -34,29 +34,38 @@ export const createUser = async (req, res) => {
     }
 
     let { first_name, last_name, email, password } = reqBody;
-    const hashPassword = bcrypt.hashSync(password);
-    let user = new User({
-      first_name,
-      last_name,
-      email,
-      password: hashPassword,
-    });
-    const newUser = await user.save();
-    if (!newUser) {
+
+    const existingUser = User.findOne({ email });
+    if (existingUser) {
       return res.status(200).json({
         status: false,
-        message: "Unexpected error occurred, Please try again later!",
+        message: `User with ${email} email id already exists!`,
+      });
+    } else {
+      const hashPassword = bcrypt.hashSync(password);
+      let user = new User({
+        first_name,
+        last_name,
+        email,
+        password: hashPassword,
+      });
+      const newUser = await user.save();
+      if (!newUser) {
+        return res.status(200).json({
+          status: false,
+          message: "Unexpected error occurred, Please try again later!",
+        });
+      }
+      return res.status(200).json({
+        status: true,
+        user: {
+          first_name: newUser.first_name,
+          last_name: newUser.last_name,
+          email: newUser.email,
+        },
+        message: "User Registered Successfully!",
       });
     }
-    return res.status(200).json({
-      status: true,
-      user: {
-        first_name: newUser.first_name,
-        last_name: newUser.last_name,
-        email: newUser.email,
-      },
-      message: "User Registered Successfully!",
-    });
   } catch (e) {
     console.log(e);
     return res.status(200).json({
@@ -131,11 +140,9 @@ export const deleteUser = async (req, res) => {
     }
   } catch (e) {
     console.log(e);
-    return res
-      .status(200)
-      .json({
-        status: false,
-        message: "Unexpected error occurred, Please try again later!",
-      });
+    return res.status(200).json({
+      status: false,
+      message: "Unexpected error occurred, Please try again later!",
+    });
   }
 };
