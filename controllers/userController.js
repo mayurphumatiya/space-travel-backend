@@ -35,7 +35,7 @@ export const createUser = async (req, res) => {
 
     let { first_name, last_name, email, password } = reqBody;
 
-    const existingUser = User.findOne({ email });
+    const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(200).json({
         status: false,
