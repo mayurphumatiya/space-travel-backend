@@ -17,7 +17,7 @@ app.use("/auth", authRouter);
 
 mongoose
   .connect(
-    `mongodb+srv://admin:${process.env.MONGO_DB_PASSWORD}@cluster0.7lmpgrb.mongodb.net/test`
+    `mongodb+srv://admin:OFCuU4hGQbPPCley@cluster0.7lmpgrb.mongodb.net/test`
   )
   .then(() =>
     app.listen(port, () => {
