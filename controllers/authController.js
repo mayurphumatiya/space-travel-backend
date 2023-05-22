@@ -1,9 +1,9 @@
-import express from "express";
 import bcrypt from "bcryptjs";
 import { isFieldPresentInRequest } from "../utils/helpers";
 import jsonwebtoken from "jsonwebtoken";
 import User from "../models/User";
 import mongoose from "mongoose";
+import config from "config";
 
 export const userLogin = async (req, res) => {
   try {
@@ -45,7 +45,7 @@ export const userLogin = async (req, res) => {
 
       const token = jsonwebtoken.sign(
         { id: user._id },
-        process.env.SECRET_KEY,
+        config.get("secret_key"),
         {
           expiresIn: 3600,
         }
@@ -61,6 +61,7 @@ export const userLogin = async (req, res) => {
       );
 
       if (userLog) {
+        console.log(token)
         return res.status(200).json({
           status: true,
           token,
@@ -111,11 +112,9 @@ export const userLogout = async (req, res) => {
       .json({ status: true, message: "Logged out Successfully!" });
   } catch (e) {
     console.log(e);
-    return res
-      .status(200)
-      .json({
-        status: false,
-        message: "Unexpected error occurred, Please try again later!",
-      });
+    return res.status(200).json({
+      status: false,
+      message: "Unexpected error occurred, Please try again later!",
+    });
   }
 };

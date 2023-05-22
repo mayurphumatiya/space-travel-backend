@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import config from "config";
 import userRouter from "./routes/userRoutes";
+import ticketRouter from "./routes/ticketRoutes";
 import authRouter from "./routes/authRoutes";
 import cors from "cors";
 const app = express();
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 });
 app.use("/user", userRouter);
 app.use("/auth", authRouter);
+app.use("/ticket", ticketRouter);
 
 mongoose
   .connect(`mongodb+srv://admin:${dbConfig}@cluster0.7lmpgrb.mongodb.net/test`)
