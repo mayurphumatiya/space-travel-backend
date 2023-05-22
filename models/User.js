@@ -22,7 +22,7 @@ const userSchema = new Schema({
   },
   is_logged_in: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 
