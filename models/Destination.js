@@ -23,6 +23,10 @@ const destinationSchema = new Schema({
     type: String,
     required: true,
   },
+  ticket_price: {
+    type: Number,
+    required: true,
+  },
 });
 
 export default mongoose.model("Destination", destinationSchema);
