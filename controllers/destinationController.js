@@ -21,6 +21,26 @@ export const getDestinations = async (req, res) => {
   }
 };
 
+export const getDestinationsById = async (req, res) => {
+  try {
+    const destination = await Destination.findById(req.params.id);
+    if (!destination) {
+      return res.status(200).json({
+        status: false,
+        message: "No destinations found, Please try again later!",
+      });
+    }
+
+    res.status(200).json({ status: true, destination });
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      status: false,
+      message: "Unexpected error occurred!,Please try again later!",
+    });
+  }
+};
+
 export const addDestination = async (req, res) => {
   try {
     const reqBody = req.body;
