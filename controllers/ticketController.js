@@ -1,17 +1,22 @@
 import mongoose from "mongoose";
 import Tickets from "../models/Tickets";
 import User from "../models/User";
-import { isFieldPresentInRequest } from "../utils/helpers";
+import { isFieldPresentInRequest, sendMail } from "../utils/helpers";
 
 export const ticketBooking = async (req, res) => {
   try {
     const reqBody = req.body;
     let requiredFields = [
-      "ticket",
+      "full_name",
       "destination",
-      "est_time",
-      "distance",
+      "tickets",
+      "price",
       "total_price",
+      "travel",
+      "distance",
+      "image",
+      "email",
+      "paymentMethod",
     ];
     let invalidFields = [];
 
@@ -30,12 +35,26 @@ export const ticketBooking = async (req, res) => {
       });
     }
 
-    let { ticket, destination, est_time, distance, total_price } = reqBody;
+    let {
+      user_id,
+      full_name,
+      destination,
+      tickets,
+      price,
+      total_price,
+      travel,
+      distance,
+      image,
+      email,
+      paymentMethod,
+      cardNo,
+      upiId,
+    } = reqBody;
 
     const userId = req.user.id;
-    const user_id = new mongoose.Types.ObjectId(userId);
+    const userid = new mongoose.Types.ObjectId(userId);
 
-    const user = await User.findOne({ _id: user_id });
+    const user = await User.findOne({ _id: userid });
     if (!user) {
       return res
         .status(200)
@@ -43,11 +62,18 @@ export const ticketBooking = async (req, res) => {
     }
     const bookTicket = new Tickets({
       user_id: user._id,
-      ticket,
+      full_name,
       destination,
-      est_time,
-      distance,
+      tickets,
+      price,
       total_price,
+      travel,
+      distance,
+      image,
+      email,
+      paymentMethod,
+      cardNo,
+      upiId,
     });
 
     const newTicket = await bookTicket.save();
@@ -62,7 +88,7 @@ export const ticketBooking = async (req, res) => {
 
     return res.status(200).json({
       status: true,
-      message: `Congratulations on booking your ticket to the ${newTicket.destination}!`,
+      message: `Congratulations! Your tickets are booked🎉`,
     });
   } catch (e) {
     console.log(e);
