@@ -35,12 +35,26 @@ export const ticketBooking = async (req, res) => {
       });
     }
 
-    let { ticket, destination, est_time, distance, total_price } = reqBody;
+    let {
+      user_id,
+      full_name,
+      destination,
+      tickets,
+      price,
+      total_price,
+      travel,
+      distance,
+      image,
+      email,
+      paymentMethod,
+      cardNo,
+      upiId,
+    } = reqBody;
 
     const userId = req.user.id;
-    const user_id = new mongoose.Types.ObjectId(userId);
+    const userid = new mongoose.Types.ObjectId(userId);
 
-    const user = await User.findOne({ _id: user_id });
+    const user = await User.findOne({ _id: userid });
     if (!user) {
       return res
         .status(200)
@@ -59,7 +73,7 @@ export const ticketBooking = async (req, res) => {
       email,
       paymentMethod,
       cardNo,
-      upiId
+      upiId,
     });
 
     const newTicket = await bookTicket.save();

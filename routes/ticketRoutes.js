@@ -4,6 +4,6 @@ import { ticketBooking } from "../controllers/ticketController";
 
 const ticketRouter = express.Router();
 
-ticketRouter.post("/book", ticketBooking);
+ticketRouter.post("/book", auth, ticketBooking);
 
 export default ticketRouter;
