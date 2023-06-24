@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Tickets from "../models/Tickets";
 import User from "../models/User";
 import { isFieldPresentInRequest, sendMail } from "../utils/helpers";
+import qr from "qrcode"
 
 export const ticketBooking = async (req, res) => {
   try {
@@ -86,10 +87,26 @@ export const ticketBooking = async (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      status: true,
-      message: `Congratulations! Your tickets are booked🎉`,
-    });
+    let data = {
+      "id": newTicket._id,
+      "Tickets":newTicket.tickets,
+      "Name":newTicket.full_name,
+      "Price":newTicket.total_price,
+      "Destination":newTicket.destination
+    }
+    let dataJson = JSON.stringify(data);
+    qr.toDataURL(dataJson,{type:'terminal'},function(err, code){
+      if(err) return console.log(err);
+      
+      sendMail(newTicket.email, code)
+
+      return res.status(200).json({
+        status: true,
+        message: `Congratulations! Your tickets are booked🎉`,
+      });
+
+    })
+
   } catch (e) {
     console.log(e);
     return res.status(200).json({
