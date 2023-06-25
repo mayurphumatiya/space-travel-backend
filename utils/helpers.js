@@ -19,10 +19,10 @@ export function isFieldPresentInRequest(reqBody, fieldName) {
 
 export const sendMail = async (mail, code) => {
   let transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: "outlook",
     auth: {
-      user: "spacetourism6969@gmail.com",
-      pass: "ojagzlcpdvignujo",
+      user: "spacetourism69@outlook.com",
+      pass: "ljtoiyfeaueajrgs",
     },
   });
 
@@ -933,7 +933,7 @@ export const sendMail = async (mail, code) => {
   `;
 
   var mailOptions = {
-    from: "spacetourism6969@gmail.com",
+    from: "spacetourism69@outlook.com",
     to: mail,
     subject: "Congratulations!! Tickets Booked",
     html: emailTemplate,
