@@ -47,7 +47,7 @@ export const userLogin = async (req, res) => {
         { id: user._id },
         config.get("secret_key"),
         {
-          expiresIn: 3600,
+          expiresIn: 36000,
         }
       );
 
