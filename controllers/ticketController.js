@@ -98,12 +98,7 @@ export const ticketBooking = async (req, res) => {
     qr.toDataURL(dataJson,{type:'terminal'},function(err, code){
       if(err) return console.log(err);
       
-      sendMail(newTicket.email, code)
-
-      return res.status(200).json({
-        status: true,
-        message: `Congratulations! Your tickets are booked🎉`,
-      });
+      sendMail(newTicket.email, code, res)
 
     })
 
