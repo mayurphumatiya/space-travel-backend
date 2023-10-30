@@ -17,12 +17,12 @@ export function isFieldPresentInRequest(reqBody, fieldName) {
   }
 }
 
-export const sendMail = async (mail, code) => {
+export const sendMail = async (mail, code, res) => {
   let transporter = nodemailer.createTransport({
     service: "outlook",
     auth: {
-      user: "spacetourism69@outlook.com",
-      pass: "ljtoiyfeaueajrgs",
+      user: "spacetourism6969@outlook.com",
+      pass: "qhfpxnckusaunmmw",
     },
   });
 
@@ -244,7 +244,7 @@ export const sendMail = async (mail, code) => {
                 class="full"
               >
                 <img
-                  src="https://cdn.discordapp.com/attachments/1084788917036920832/1122183795286749194/image.png"
+                  src="https://cdn.discordapp.com/attachments/970743232931721237/1168508388523638844/image.png"
                   alt="logo"
                   width="600"
                 />
@@ -318,7 +318,7 @@ export const sendMail = async (mail, code) => {
                         href="https://dev--spacex-travel.netlify.app/"
                         style="text-decoration: none; color: #d2d8f9"
                         target="_blank"
-                        >Explore More Destinations</a
+                        ><img src="https://cdn.discordapp.com/attachments/970743232931721237/1168510140471844925/image.png" alt="explore" width="600" /></a
                       >
                     </h4>
                   </td>
@@ -344,7 +344,7 @@ export const sendMail = async (mail, code) => {
                         style="text-decoration: none"
                       >
                         <img
-                          src="https://cdn.discordapp.com/attachments/1084788917036920832/1122123927100084275/image-moon.webp"
+                          src="https://cdn.discordapp.com/attachments/970743232931721237/1164873139348586567/image-moon.png"
                           width="160"
                           alt="Moon"
                           style="
@@ -361,7 +361,7 @@ export const sendMail = async (mail, code) => {
                         href="https://dev--spacex-travel.netlify.app/destination"
                         style="text-decoration: none"
                         ><img
-                          src="https://cdn.discordapp.com/attachments/1084788917036920832/1122123927615963186/image-mars.webp"
+                          src="https://cdn.discordapp.com/attachments/970743232931721237/1164873137909923941/image-mars.png"
                           width="160"
                           alt="Mars"
                           style="
@@ -378,7 +378,7 @@ export const sendMail = async (mail, code) => {
                         href="https://dev--spacex-travel.netlify.app/destination"
                         style="text-decoration: none"
                         ><img
-                          src="https://cdn.discordapp.com/attachments/1084788917036920832/1122123927372709939/image-europa.webp"
+                          src="https://cdn.discordapp.com/attachments/970743232931721237/1164873137062690926/image-europa.png"
                           alt="Europa"
                           width="160"
                           style="
@@ -933,7 +933,7 @@ export const sendMail = async (mail, code) => {
   `;
 
   var mailOptions = {
-    from: "spacetourism69@outlook.com",
+    from: "spacetourism6969@outlook.com",
     to: mail,
     subject: "Congratulations!! Tickets Booked",
     html: emailTemplate,
@@ -950,6 +950,10 @@ export const sendMail = async (mail, code) => {
       console.log(error);
     } else {
       console.log("email sent" + info.response);
+      return res.status(200).json({
+        status: true,
+        message: `Congratulations! Your tickets are booked🎉`,
+      });
     }
   });
 };
