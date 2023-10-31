@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 import Tickets from "../models/Tickets";
 import User from "../models/User";
-import { isFieldPresentInRequest, sendMail } from "../utils/helpers";
+import { isFieldPresentInRequest } from "../utils/helpers";
+import { sendMail } from "../utils/nodemailerTemplate";
 import qr from "qrcode"
 
 export const ticketBooking = async (req, res) => {
