@@ -2,10 +2,10 @@ import nodemailer from "nodemailer";
 
 export const sendMail = async (mail, code, res) => {
     let transporter = nodemailer.createTransport({
-      service: "outlook",
+      service: "gmail",
       auth: {
-        user: "spacetourism6969@outlook.com",
-        pass: "qhfpxnckusaunmmw",
+        user: "spacetourism6969@gmail.com",
+        pass: "dbbtpwntcahntwyu",
       },
     });
   
