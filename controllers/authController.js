@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
-import { isFieldPresentInRequest } from "../utils/helpers";
+import { isFieldPresentInRequest } from "../utils/helpers.js";
 import jsonwebtoken from "jsonwebtoken";
-import User from "../models/User";
+import User from "../models/User.js";
 import mongoose from "mongoose";
 import config from "config";
 

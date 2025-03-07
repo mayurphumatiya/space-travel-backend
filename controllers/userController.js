@@ -1,6 +1,6 @@
-import User from "../models/User";
+import User from "../models/User.js";
 import bcrypt from "bcryptjs";
-import { isFieldPresentInRequest } from "../utils/helpers";
+import { isFieldPresentInRequest } from "../utils/helpers.js";
 
 export const getAllUsers = async (req, res) => {
   try {

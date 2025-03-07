@@ -1,5 +1,5 @@
-import Destination from "../models/Destination";
-import { isFieldPresentInRequest } from "../utils/helpers";
+import Destination from "../models/Destination.js";
+import { isFieldPresentInRequest } from "../utils/helpers.js";
 
 export const getDestinations = async (req, res) => {
   try {

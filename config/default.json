@@ -1,6 +1,6 @@
 {
     "secret_key":"secret_space",
-    "port":5000,
+    "port":8080,
     "Database":{
         "dbName":"test",
         "dbPass":"OFCuU4hGQbPPCley"

@@ -1,6 +1,5 @@
 import express from "express";
-import { auth } from "../middlewares/auth";
-import { addDestination, getDestinations, getDestinationsById } from "../controllers/destinationController";
+import { addDestination, getDestinations, getDestinationsById } from "../controllers/destinationController.js";
 
 const destinationRouter = express.Router();
 

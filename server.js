@@ -1,11 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import config from "config";
-import userRouter from "./routes/userRoutes";
-import ticketRouter from "./routes/ticketRoutes";
-import authRouter from "./routes/authRoutes";
+import userRouter from "./routes/userRoutes.js";
+import ticketRouter from "./routes/ticketRoutes.js";
+import authRouter from "./routes/authRoutes.js";
 import cors from "cors";
-import destinationRouter from "./routes/destinationRoutes";
+import destinationRouter from "./routes/destinationRoutes.js";
 import bodyParser from "body-parser";
 const app = express();
 
@@ -33,7 +33,7 @@ app.use("/ticket", ticketRouter);
 app.use("/destination", destinationRouter);
 
 mongoose
-  .connect(`mongodb+srv://admin:${dbConfig}@cluster0.7lmpgrb.mongodb.net/test`)
+  .connect(`mongodb+srv://admin:${dbConfig}@cluster0.7lmpgrb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`)
   .then(() =>
     app.listen(port, () => {
       console.log(`Connected to Database & Server is running`);
