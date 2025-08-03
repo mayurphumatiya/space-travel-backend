@@ -33,7 +33,7 @@ app.use("/ticket", ticketRouter);
 app.use("/destination", destinationRouter);
 
 mongoose
-  .connect(`mongodb+srv://admin:${dbConfig}@cluster0.7lmpgrb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`)
+  .connect(`mongodb+srv://admin:${dbConfig}@cluster0.7lmpgrb.mongodb.net/test`)
   .then(() =>
     app.listen(port, () => {
       console.log(`Connected to Database & Server is running`);
